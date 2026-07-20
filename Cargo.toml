@@ -1,0 +1,13 @@
+[package]
+name = "mail-notify"
+version = "0.1.0"
+edition = "2021"
+description = "IMAP IDLE watcher that sends desktop notifications for new Gmail"
+
+[dependencies]
+imap = "3.0.0-alpha.15"
+native-tls = "0.2"
+notify-rust = "4"
+dotenvy = "0.15"
+log = "0.4"
+env_logger = "0.11"
