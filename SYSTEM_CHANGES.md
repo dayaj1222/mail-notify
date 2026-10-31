@@ -33,3 +33,19 @@
 # dotenvy 0.15
 # log 0.4
 # env_logger 0.11
+
+## 2026-10-31 — binary installed outside the source tree
+
+Symptom: notifications stopped, unit stuck in `activating (auto-restart)`,
+`status=203/EXEC`. Cause: `ExecStart` pointed at `target/release/mail-notify`,
+which no longer existed (target/ had been cleaned). The code was fine; there
+was no binary.
+
+Fix: install to a stable path and repoint the unit.
+
+    cargo install --path . --root ~/.local --locked
+    # ExecStart=%h/.local/bin/mail-notify
+    systemctl --user daemon-reload && systemctl --user restart mail-notify
+
+After editing the source, re-run `cargo install --path . --root ~/.local`
+before restarting the service — the unit no longer reads from target/.
